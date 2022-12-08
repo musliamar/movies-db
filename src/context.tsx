@@ -6,37 +6,29 @@ import React, {
   Dispatch
 } from 'react'
 
-import type ProductType from '../interfaces/product'
-import type CategoryType from '../interfaces/category'
-import { SET_CATEGORIES, SET_CURRENCY, ADD_TO_CART } from '../lib/constants'
+import { ISingleEntryData } from './interfaces'
+import { SET_CURRENT_DATA, SET_ERROR } from './constants'
 
 interface State {
-  choosenCurrency: string
-  itemsInCart: ProductType[]
-  categories: CategoryType[]
+  currentData: ISingleEntryData[]
+  error: string
 }
 
-const categories: CategoryType[] = []
-const itemsInCart: ProductType[] = []
+const currentData: ISingleEntryData[] = []
 
 const initialValues = {
-  choosenCurrency: 'usd',
-  itemsInCart,
-  categories
+  currentData,
+  error: ''
 }
 
-  type Action =
+type Action =
     | {
-      type: 'SET_CURRENCY'
+      type: 'SET_CURRENT_DATA'
+      payload: ISingleEntryData[]
+    }
+    | {
+      type: 'SET_ERROR'
       payload: string
-    }
-    | {
-      type: 'ADD_TO_CART'
-      payload: ProductType
-    }
-    | {
-      type: 'SET_CATEGORIES'
-      payload: CategoryType[]
     }
 
 const StateContext = createContext<State>(initialValues)
@@ -44,22 +36,19 @@ const DispatchContext = createContext<Dispatch<Action>>(
   () => null
 )
 
-const reducer = (state: State, action: Action): Object => {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case SET_CURRENCY:
+    case SET_CURRENT_DATA:
       return {
         ...state,
-        choosenCurrency: action.payload
+        currentData: action.payload,
+        error: ''
       }
-    case ADD_TO_CART:
+    case SET_ERROR:
       return {
         ...state,
-        itemsInCart: [...state.itemsInCart, action.payload]
-      }
-    case SET_CATEGORIES:
-      return {
-        ...state,
-        categories: action.payload
+        error: action.payload
       }
     default:
       throw new Error(`Unknown action: ${JSON.stringify(action)}`)
@@ -79,5 +68,5 @@ export const StoreProvider = ({ children }: ProviderProps): JSX.Element => {
   )
 }
 
-export const useStore = () => useContext(StateContext)
-export const useDispatch = () => useContext(DispatchContext)
+export const useStore = (): State => useContext(StateContext)
+export const useDispatch = (): Dispatch<Action> => useContext(DispatchContext)

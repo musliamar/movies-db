@@ -1,9 +1,17 @@
 
 import { API_KEY } from './env.dev'
-import { IMoviesData } from './interfaces'
+import { IEntriesData } from './interfaces'
 
-export async function fetchTopRatedMovies (): Promise<IMoviesData[]> {
-  const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`)
-  const body = await response.json()
-  return body
+interface Props {
+  toFetch: string
+}
+
+export async function fetchTopRated ({ toFetch }: Props): Promise<IEntriesData> {
+  return await fetch(`https://api.themoviedb.org/3/${toFetch}/top_rated?api_key=${API_KEY}&language=en-US&page=1`)
+    .then(async response => {
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+      return await response.json()
+    })
 }

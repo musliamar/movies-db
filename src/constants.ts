@@ -1,2 +1,3 @@
 export const SET_CURRENT_DATA = 'SET_CURRENT_DATA'
 export const SET_CURRENT_SINGLE = 'SET_CURRENT_SINGLE'
+export const SET_ERROR = 'SET_ERROR'
