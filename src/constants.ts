@@ -1,4 +1,3 @@
-export const SET_CURRENT_DATA = 'SET_CURRENT_DATA'
-export const SET_CURRENT_SINGLE = 'SET_CURRENT_SINGLE'
-export const SET_ERROR = 'SET_ERROR'
 export const SET_SEARCH = 'SET_SEARCH'
+export const MEDIA_URL = 'https://image.tmdb.org/t/p/w1920_and_h800_multi_faces'
+export const IMDB_SINGLE_URL = 'http://www.imdb.com/title'

@@ -5,8 +5,8 @@ import './Search.css'
 
 function Search (): JSX.Element {
   const { searchInput } = useStore()
-  const [input, setInput] = useState(searchInput)
   const dispatch = useDispatch()
+  const [input, setInput] = useState(searchInput)
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target
     setInput(value)
@@ -15,14 +15,14 @@ function Search (): JSX.Element {
 
   return (
     <>
-        <input
-            type="text"
-            id="search"
-            placeholder="Search"
-            name="search"
-            value={input}
-            onChange={(e) => handleChange(e)}
-        />
+      <input
+        type="text"
+        id="search"
+        placeholder="Search"
+        name="search"
+        value={input}
+        onChange={(e) => handleChange(e)}
+      />
     </>
   )
 }

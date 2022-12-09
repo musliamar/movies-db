@@ -104,3 +104,8 @@ header nav a:hover, .checked {
     border-radius: 20px;
 }
 
+@media (max-width: 1024px) {
+    .entry-card {
+        width: 100%;
+    }
+}

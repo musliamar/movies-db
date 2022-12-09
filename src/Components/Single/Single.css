@@ -50,6 +50,7 @@
     background-color: #242424;
     border-radius: 20px;
     padding: 20px;
+    min-height: 600px;
 }
 
 .single-entry-container .headline {
@@ -102,3 +103,17 @@
 .single-entry-container .imdb-icon, .single-entry-container .href-icon {
     width: 50px;
 }
+
+@media (max-width: 1330px) {
+    .single-entry-container {
+        min-height: 550px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .single-entry-container {
+        min-height: 100px;
+    }
+}
+
+
