@@ -24,12 +24,11 @@ function Single (): JSX.Element {
       .catch(() => {
         dispatch({
           type: SET_ERROR,
-          payload: 'Error with retrieving data.'
+          payload: 'There is nothing on this path.'
         })
       })
   }, [category])
 
-  console.log(currentSingle)
   return (
     <>
     <button onClick={() => navigate(-1)}>Go back</button>

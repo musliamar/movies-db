@@ -1,8 +1,8 @@
 import React from 'react'
 import './App.css'
-import Category from './Components/Category'
 import Single from './Components/Single'
-import Footer from './Components/Footer/Footer'
+import Footer from './Components/Footer'
+import Category from './Components/Category'
 import { Routes, Route } from 'react-router-dom'
 
 function App (): JSX.Element {
