@@ -6,3 +6,17 @@
     margin-left: 7%;
     margin-right: 7%;
 }
+
+.average-vote-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #5a050b;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    border: 1px dashed #e00f1d;
+}
