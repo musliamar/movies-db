@@ -31,9 +31,9 @@ function Single (): JSX.Element {
 
   const YEAR = (DATE != null) ? DATE.split('-')[0] : AIR_DATE?.split('-')[0]
   const AVERAGE_VOTE = VOTE_AVERAGE?.toFixed(1)
-  const EPISODE_RUNTIME = (typeof EPISODES_RUNTIME_TO_FIX === 'object') ? EPISODES_RUNTIME_TO_FIX[0] : EPISODES_RUNTIME_TO_FIX
-  const GENRES_ARRAY = (GENRES_TO_FIX as any[]).map((genre) => genre.name)
-  const GENRES = GENRES_ARRAY.join(', ')
+  const EPISODE_RUNTIME = (typeof EPISODES_RUNTIME_TO_FIX === 'object' && (EPISODES_RUNTIME_TO_FIX.length !== 0)) ? `~ ${EPISODES_RUNTIME_TO_FIX[0]}` : EPISODES_RUNTIME_TO_FIX
+  const GENRES_ARRAY = (typeof GENRES_TO_FIX === 'object') ? (GENRES_TO_FIX as any[]).map((genre) => genre.name) : null
+  const GENRES = (GENRES_ARRAY != null) ? GENRES_ARRAY.join(', ') : null
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let categoryToFetch: string = category as string
@@ -67,24 +67,26 @@ function Single (): JSX.Element {
                   <div className='title-and-votes'>
                     {(TITLE != null) && <h1 className='entry-name'>{TITLE}</h1>}
                     {(NAME != null) && <h1 className='entry-name'>{NAME}</h1>}
-                    <span className='average-vote-label'>{AVERAGE_VOTE}</span>
-                    <span>{VOTES} votes</span>
                     {(YEAR != null) && <span>{YEAR}</span>}
                     {(GENRES_TO_FIX != null) && <span>{GENRES}</span>}
                   </div>
                   <div className='links'>
+                    <div className='votes'>
+                      <span className='average-vote-label'>{AVERAGE_VOTE}</span>
+                      <span>{VOTES} votes</span>
+                    </div>
                     {(RUNTIME != null) && <span>{RUNTIME} min</span>}
-                    {(EPISODE_RUNTIME != null) && <span>{EPISODE_RUNTIME} min</span>}
+                    {((EPISODE_RUNTIME != null) && (EPISODE_RUNTIME.length !== 0)) && <span>{EPISODE_RUNTIME} min</span>}
                     {(IMDB_ID != null) && <a href={`http://www.imdb.com/title/${IMDB_ID}` } target="_blank" rel="noreferrer">
                       <img className='imdb-icon' src={IMDB} />
                     </a>}
-                    {(HOMEPAGE != null) && <a href={HOMEPAGE} target="_blank" rel="noreferrer">
+                    {((HOMEPAGE != null) && (HOMEPAGE !== '')) && <a href={HOMEPAGE} target="_blank" rel="noreferrer">
                       <img className='href-icon' src={HREF} />
                     </a>}
                   </div>
                   </div>
               </div>
-              {(TAGLINE != null) &&
+              {(TAGLINE != null && TAGLINE !== '') &&
               <div className='tagline'>
                 {`"${TAGLINE}"`}
                 </div>}
