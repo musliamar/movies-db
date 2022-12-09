@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
+import { useDispatch, useStore } from '../../context'
+import { SET_SEARCH } from '../../constants'
+import './Search.css'
 
 function Search (): JSX.Element {
+  const { searchInput } = useStore()
+  const [input, setInput] = useState(searchInput)
+  const dispatch = useDispatch()
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { value } = e.target
+    setInput(value)
+    dispatch({ type: SET_SEARCH, payload: value })
+  }
+
   return (
-    <div className='search'>
-        Search box
-    </div>
+    <>
+        <input
+            type="text"
+            id="search"
+            placeholder="Search"
+            name="search"
+            value={input}
+            onChange={(e) => handleChange(e)}
+        />
+    </>
   )
 }
 

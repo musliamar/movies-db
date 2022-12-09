@@ -1,3 +1,38 @@
+header {
+    margin-bottom: 2%;
+}
+
+header nav {
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+}
+
+header nav a {
+    background-color: #ab0611;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 30px;
+    border: 2px solid #5a040a;
+    box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+    border-radius: 50px;
+    transition : 1000ms;
+    transform: translateY(0);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+header nav a:hover, .checked {
+    transition : 1000ms;
+    padding: 10px 31px;
+    transform : translateY(-0px);
+    background-color: #5a050b;
+    color: #fff;
+    border: solid 2px #e00f1d;
+}
+
 .entries-container {
     display: flex;
     flex-direction: row;
@@ -11,8 +46,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 48%;
+    width: 45%;
     margin-bottom: 2%;
+    padding: 20px;
+}
+
+.entry-card:hover {
+    background-color: #464646;
+    border-radius: 20px;
 }
 
 .entry-name {
@@ -21,4 +62,5 @@
 
 .entry-poster {
     width: 100%;
+    border-radius: 20px;
 }
