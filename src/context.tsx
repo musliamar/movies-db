@@ -7,17 +7,22 @@ import React, {
 } from 'react'
 
 import { ISingleEntryData } from './interfaces'
-import { SET_CURRENT_DATA, SET_ERROR } from './constants'
+import { SET_CURRENT_DATA, SET_ERROR, SET_CURRENT_SINGLE, SET_SEARCH } from './constants'
 
 interface State {
   currentData: ISingleEntryData[]
+  currentSingle: ISingleEntryData
+  searchInput: string
   error: string
 }
 
 const currentData: ISingleEntryData[] = []
+const currentSingle: ISingleEntryData = {}
 
 const initialValues = {
   currentData,
+  currentSingle,
+  searchInput: '',
   error: ''
 }
 
@@ -29,6 +34,14 @@ type Action =
     | {
       type: 'SET_ERROR'
       payload: string
+    }
+    | {
+      type: 'SET_SEARCH'
+      payload: string
+    }
+    | {
+      type: 'SET_CURRENT_SINGLE'
+      payload: ISingleEntryData
     }
 
 const StateContext = createContext<State>(initialValues)
@@ -49,6 +62,16 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         error: action.payload
+      }
+    case SET_SEARCH:
+      return {
+        ...state,
+        searchInput: action.payload
+      }
+    case SET_CURRENT_SINGLE:
+      return {
+        ...state,
+        currentSingle: action.payload
       }
     default:
       throw new Error(`Unknown action: ${JSON.stringify(action)}`)

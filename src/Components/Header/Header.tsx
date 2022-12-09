@@ -5,8 +5,8 @@ function Header (): JSX.Element {
   return (
       <header>
         <nav>
-        <Link to={'movie'}>Movies</Link>
-        <Link to={'tv'}>TV Shows</Link>
+        <Link to={'/movie'}>Movies</Link>
+        <Link to={'/tv'}>TV Shows</Link>
         </nav>
       </header>
   )

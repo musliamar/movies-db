@@ -1,18 +1,21 @@
 import React from 'react'
 import './App.css'
-import Header from './Components/Header/Header'
-import Search from './Components/Search/Search'
-import Main from './Components/Main/Main'
+import Category from './Components/Category'
+import Single from './Components/Single'
 import Footer from './Components/Footer/Footer'
 import { Routes, Route } from 'react-router-dom'
 
 function App (): JSX.Element {
   return (
     <div className="App">
-      <Header />
-      <Search />
       <Routes>
-        <Route path=":category" element={ <Main /> } />
+        <Route path="/">
+          <Route index element={ <Category /> } />
+          <Route path=":category">
+            <Route index element={ <Category /> } />
+            <Route path=":singleId" element={ <Single /> } />
+          </Route>
+        </Route>
       </Routes>
       <Footer />
     </div>
