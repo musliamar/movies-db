@@ -54,6 +54,7 @@ function SingleCard ({ category, data }: Props): JSX.Element {
           <img
             className={hover === id ? 'entry-poster opacity' : 'entry-poster'}
             src={singlePosterPath}
+            loading='lazy'
           />
           {hover === id &&
             <>
