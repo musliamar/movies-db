@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState, useEffect } from 'react'
 import { useDispatch, useStore } from '../../lib/context'
 import { SET_SEARCH } from '../../lib/constants'
 import './Search.css'
@@ -7,11 +7,18 @@ function Search (): JSX.Element {
   const { searchInput } = useStore()
   const dispatch = useDispatch()
   const [input, setInput] = useState(searchInput)
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target
     setInput(value)
-    dispatch({ type: SET_SEARCH, payload: value })
   }
+
+  useEffect(() => {
+    const startFetch = setTimeout(() => {
+      dispatch({ type: SET_SEARCH, payload: input })
+    }, 1000)
+    return () => clearTimeout(startFetch)
+  }, [input])
 
   return (
     <>

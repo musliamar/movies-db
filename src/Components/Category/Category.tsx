@@ -21,7 +21,7 @@ function Category (): JSX.Element {
 
   let categoryToFetch: string = category as string
   const queryToFetch: string = searchInput
-  if (category === undefined) categoryToFetch = 'movie'
+  if (category === undefined) categoryToFetch = 'tv'
 
   useEffect(() => {
     if (searchInput.length < 3) {
