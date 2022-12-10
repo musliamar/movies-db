@@ -104,6 +104,23 @@
     width: 50px;
 }
 
+iframe {
+    border-width: 0px;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border-radius: 20px;
+}
+
+.youtube-embed {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+
 @media (max-width: 1330px) {
     .single-entry-container {
         min-height: 550px;
@@ -115,5 +132,3 @@
         min-height: 100px;
     }
 }
-
-

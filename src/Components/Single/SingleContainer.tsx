@@ -1,15 +1,17 @@
 import React from 'react'
-import { ISingleEntryData } from '../../interfaces'
+import { ISingleAllData, ISingleVideoData } from '../../interfaces'
 import { MEDIA_URL, IMDB_SINGLE_URL } from '../../constants'
 import IMDB from '../../imdb.png'
 import HREF from '../../href.png'
 import DEFAULT_IMAGE from '../../default.png'
 
 interface Props {
-  data: ISingleEntryData
+  allData: ISingleAllData
 }
 
-function SingleContainer ({ data }: Props): JSX.Element {
+function SingleContainer ({ allData }: Props): JSX.Element {
+  const { detailsData, videosData } = allData
+
   const {
     original_title: TITLE,
     name: NAME,
@@ -25,14 +27,27 @@ function SingleContainer ({ data }: Props): JSX.Element {
     genres: GENRES_TO_FIX,
     first_air_date: AIR_DATE,
     vote_average: VOTE_AVERAGE
-  } = data
+  } = detailsData
 
+  const TRAILERS = videosData?.filter((video: ISingleVideoData) => (video.official) && (video.type === 'Trailer') && (video.site === 'YouTube'))
+  const FIRST_TRAILER_KEY = ((TRAILERS != null) && (TRAILERS !== undefined) && (TRAILERS.length !== 0)) && TRAILERS[0].key
+  const TRAILER_EMBED = (FIRST_TRAILER_KEY !== false) && <div className='youtube-embed'>
+                          <iframe
+                            width='800'
+                            height='400'
+                            src={`https://www.youtube-nocookie.com/embed/${FIRST_TRAILER_KEY as string}`}
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen />
+                        </div>
+
+  const image = POSTER as string
+  const singlePosterPath = (image !== null) ? `${MEDIA_URL}/${image}` : DEFAULT_IMAGE
+  const entryPoster = (FIRST_TRAILER_KEY !== false) ? TRAILER_EMBED : <img className='entry-poster' src={singlePosterPath} />
   const YEAR = (DATE != null) ? DATE.split('-')[0] : AIR_DATE?.split('-')[0]
   const AVERAGE_VOTE = VOTE_AVERAGE?.toFixed(1)
   const GENRES_ARRAY = (typeof GENRES_TO_FIX === 'object') ? (GENRES_TO_FIX as any[]).map((genre) => genre.name) : null
   const GENRES = (GENRES_ARRAY != null) ? GENRES_ARRAY.join(', ') : null
-  const image = POSTER as string
-  const singlePosterPath = (image !== null) ? `${MEDIA_URL}/${image}` : DEFAULT_IMAGE
   const entryYear = (YEAR != null) && <span>{YEAR}</span>
   const entryGenres = (GENRES_TO_FIX != null) && <span>{GENRES}</span>
   const entryNumberOfVotes = (VOTES !== 0) && <span>{VOTES} votes</span>
@@ -53,7 +68,7 @@ function SingleContainer ({ data }: Props): JSX.Element {
       <span>{EPISODE_RUNTIME} min</span>
 
   const imdbLink = (IMDB_ID != null) &&
-                    <a href={`${IMDB_SINGLE_URL}/${IMDB_ID}` } target="_blank" rel="noreferrer">
+                    <a href={`${IMDB_SINGLE_URL}/${IMDB_ID}`} target="_blank" rel="noreferrer">
                       <img className='imdb-icon' src={IMDB} />
                     </a>
 
@@ -62,7 +77,7 @@ function SingleContainer ({ data }: Props): JSX.Element {
                       <img className='href-icon' src={HREF} />
                     </a>
 
-  const entryTagline = (TAGLINE != null && TAGLINE !== '') &&
+  const entryTagline = ((TAGLINE != null) && (TAGLINE !== '')) &&
                         <div className='tagline'>
                           {`"${TAGLINE}"`}
                         </div>
@@ -70,7 +85,7 @@ function SingleContainer ({ data }: Props): JSX.Element {
   return (
     <>
       <div className='entry-details'>
-        <img className='entry-poster' src={singlePosterPath} />
+        {entryPoster}
         <div className='headline'>
           <div className='title-and-votes'>
             {entryTitle}

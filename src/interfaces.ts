@@ -5,6 +5,29 @@ export interface IEntriesData {
   total_results: number
 }
 
+export interface IVideosData {
+  id: number
+  results: ISingleVideoData[]
+}
+
+export interface ISingleAllData {
+  detailsData: ISingleEntryData
+  videosData?: ISingleVideoData[]
+}
+
+export interface ISingleVideoData {
+  iso_639_1: string
+  iso_3166_1: string
+  name: string
+  key: string
+  site: string
+  size: number
+  type: string
+  official: boolean
+  published_at: string
+  id: string
+}
+
 export interface ISingleEntryData {
   backdrop_path?: string
   created_by?: {
