@@ -1,9 +1,11 @@
 import React from 'react'
 import { ISingleAllData, ISingleVideoData } from '../../interfaces'
-import { MEDIA_URL, IMDB_SINGLE_URL, BACKDROP_URL } from '../../constants'
+import { MEDIA_URL, IMDB_SINGLE_URL, BACKDROP_URL, AUTHOR_IMAGE_URL, ORIGINAL_IMAGE_URL } from '../../constants'
 import IMDB from '../../imdb.png'
 import HREF from '../../href.png'
 import DEFAULT_IMAGE from '../../default.png'
+import DEFAULT_PLACEHOLDER from '../../default-placeholder.png'
+import ReactCountryFlag from 'react-country-flag'
 
 interface Props {
   allData: ISingleAllData
@@ -12,10 +14,8 @@ interface Props {
 function SingleContainer ({ allData }: Props): JSX.Element {
   const { detailsData, videosData } = allData
 
-  console.log(detailsData)
-
   const {
-    original_title: TITLE,
+    title: ENG_TITLE,
     name: NAME,
     poster_path: POSTER,
     overview: OVERVIEW,
@@ -50,17 +50,47 @@ function SingleContainer ({ allData }: Props): JSX.Element {
     vote_average: VOTE_AVERAGE
   } = detailsData
 
+  console.log(detailsData)
+
+  interface Time {
+    fullTime: number
+  }
+
+  interface Date {
+    dateString: string
+  }
+
+  const toHoursAndMinutes = ({ fullTime }: Time): string => {
+    const hours = Math.floor(fullTime / 60)
+    const minutes = fullTime % 60
+    const hourHours = hours > 1 ? `${hours}hrs` : `${hours}h`
+    return (hours !== 0 ? `${hourHours} ${minutes}m` : `${minutes}m`)
+  }
+
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0
+  })
+
+  const dateFormatter = ({ dateString }: Date): string => {
+    const splitted = dateString.split('-')
+    const [y, m, d] = [splitted[0], splitted[1], splitted[2]]
+    return (`${m}/${d}/${y}`)
+  }
+
   const TRAILERS = videosData?.filter((video: ISingleVideoData) => (video.official) && (video.type === 'Trailer') && (video.site === 'YouTube'))
   const FIRST_TRAILER_KEY = ((TRAILERS != null) && (TRAILERS !== undefined) && (TRAILERS.length !== 0)) && TRAILERS[0].key
 
-  const TRAILER_EMBED = (FIRST_TRAILER_KEY !== false) && <div className='youtube-embed'>
-                          <iframe
-                            loading='lazy'
-                            src={`https://www.youtube-nocookie.com/embed/${FIRST_TRAILER_KEY}`}
-                            title="YouTube video player"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen />
-                        </div>
+  const TRAILER_EMBED = (FIRST_TRAILER_KEY !== false) &&
+    <div className='youtube-embed'>
+      <iframe
+      loading='lazy'
+      src={`https://www.youtube-nocookie.com/embed/${FIRST_TRAILER_KEY}`}
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen />
+    </div>
 
   const image = POSTER as string
   const singlePosterPath = (image !== null) ? `${MEDIA_URL}/${image}` : DEFAULT_IMAGE
@@ -73,123 +103,168 @@ function SingleContainer ({ allData }: Props): JSX.Element {
   const entryGenres = (GENRES_TO_FIX != null) && <span>{GENRES}</span>
   const entryNumberOfVotes = (VOTES !== 0) && <span>{VOTES} votes</span>
   const entryAverageVote = (AVERAGE_VOTE !== '0.0') && <span className='average-vote-label'>{AVERAGE_VOTE}</span>
+
   const detailsIsInProduction = (IN_PRODUCTION === true)
     ? <span className='bold'>Currently in production</span>
     : <span className='bold'>Not in production</span>
 
   const detailsBudget = (BUDGET != null && BUDGET !== 0) &&
-                        <span><span className='bold'>Budget: </span> ${BUDGET}</span>
+    <span><span className='bold'>Budget: </span> {currencyFormatter.format(BUDGET)}</span>
 
   const detailsRevenue = (REVENUE != null && REVENUE !== 0) &&
-                        <span><span className='bold'>Revenue: </span> ${REVENUE}</span>
+    <span><span className='bold'>Revenue: </span> {currencyFormatter.format(REVENUE)}</span>
 
   const detailsEpisodes = (NUM_OF_EPISODES != null && NUM_OF_EPISODES !== 0) &&
-                          <span><span className='bold'>Number of episodes: </span> {NUM_OF_EPISODES}</span>
+    <span><span className='bold'>Number of episodes: </span> {NUM_OF_EPISODES}</span>
 
   const detailsSeasons = (NUM_OF_SEASONS != null && NUM_OF_SEASONS !== 0) &&
-                          <span><span className='bold'>Number of seasons: </span> {NUM_OF_SEASONS}</span>
+    <span><span className='bold'>Number of seasons: </span> {NUM_OF_SEASONS}</span>
 
   const detailsOrigLanguage = (LANGUAGE != null) &&
-                          <span><span className='bold'>Original language: </span> {LANGUAGE}</span>
+    <span><span className='bold'>Original language: </span> {LANGUAGE}</span>
 
   const detailsLanguages = (LANGUAGES != null) &&
-                          <span><span className='bold'>Languages: </span>
-                          {LANGUAGES.map((language) => `${language}, `)}</span>
+    <span><span className='bold'>Languages: </span>
+    {LANGUAGES.map((language, index) => `${language}${index === LANGUAGES.length - 1 ? '' : ', '}`)}</span>
 
   const detailsSpokenLanguages = (SPOKEN_LANGUAGES != null) &&
-                          <span><span className='bold'>Spoken languages: </span>
-                          {SPOKEN_LANGUAGES.map((language) => `${language.english_name as string}, `)}</span>
-
-  const detailsOrigCountry = (ORIG_COUNTRY != null) &&
-                          <span><span className='bold'>Country of origin: </span> {ORIG_COUNTRY}</span>
-
-  const detailsCountries = (COUNTRIES != null) && <span><span className='bold'>Countries: </span>
-                            {COUNTRIES.map((country) => `${country.name as string}, `)}</span>
+    <span><span className='bold'>Spoken languages: </span>
+    {SPOKEN_LANGUAGES.map((language, index) => `${language.english_name as string}${index === SPOKEN_LANGUAGES.length - 1 ? '' : ', '}`)}</span>
 
   const detailsStatus = (STATUS != null) &&
-                          <span><span className='bold'>Status: </span> {STATUS}</span>
+    <span><span className='bold'>Status: </span> {STATUS}</span>
 
   const detailsLastAirDate = (LAST_AIR_DATE != null) &&
-                            <span><span className='bold'>Last air date: </span> {LAST_AIR_DATE}</span>
+    <span><span className='bold'>Last air date: </span> {dateFormatter({ dateString: LAST_AIR_DATE })}</span>
 
   const detailsOriginalTitle = (ORIGINAL_TITLE != null)
     ? <span><span className='bold'>Original title:</span> {ORIGINAL_TITLE}</span>
     : (ORIGINAL_NAME != null) && <span><span className='bold'>Original name: </span> {ORIGINAL_NAME}</span>
 
-  const detailsAuthors = (AUTHORS != null) &&
-                          <><h2>Authors</h2>
-                          <div className='group'>
-                          {AUTHORS.map((author) => (
-                            <div key={author.name} className='single-in-group'>
-                              <img width='100' loading='lazy' src={`https://image.tmdb.org/t/p/w138_and_h175_face//${author.profile_path as string}`} />
-                              <span>{author.name}</span>
-                            </div>))}
-                          </div></>
-
-  const detailsSeasonsOrCollections = (COLLECTION != null)
-    ? <><h2>Part of collection</h2>
-                                          <div className='group'>
-                                          <div key={COLLECTION.name} className='single-in-group'>
-                                          <img width='100' loading='lazy' src={`${BACKDROP_URL}/${COLLECTION.backdrop_path}`} />
-                                          <span>{COLLECTION.name}</span>
-                                        </div></div></>
-    : (SEASONS != null) && <><h2>Seasons</h2>
-    <div className='group'>
-      {SEASONS.map((season) => (
-
-                                        <div key={season.name} className='single-in-group'>
-                                          <img width='100' loading='lazy' src={`https://image.tmdb.org/t/p/w220_and_h330_face/${season.poster_path as string}`} />
-                                          <span>{season.name}</span>
-                                        </div>))}</div></>
-
-  const detailsCompanies = (COMPANIES != null) &&
-                            <><h2>Companies</h2>
-                              <div className='group'>
-                                {COMPANIES.map((company) =>
-                                  <div key={company.id} className='single-in-group'>
-                                    <img width='100' loading='lazy' src={`https://image.tmdb.org/t/p/original/${company.logo_path as string}`} />
-                                    {company.name}
-                                  </div>)}
-                              </div></>
-
-  const detailsNetworks = (NETWORKS != null) &&
-                          <><h2>Networks</h2>
-                          <div className='group'>
-                            {NETWORKS.map((network) => (
-                              <div key={network.name} className='single-in-group'>
-                                <img width='100' loading='lazy' src={`https://image.tmdb.org/t/p/original/${network.logo_path as string}`} />
-                                {network.name}
-                              </div>))}
-                          </div></>
-
   const EPISODE_RUNTIME = (typeof EPISODES_RUNTIME_TO_FIX === 'object' && (EPISODES_RUNTIME_TO_FIX.length !== 0))
-    ? `~ ${EPISODES_RUNTIME_TO_FIX[0]}`
+    ? EPISODES_RUNTIME_TO_FIX[0]
     : EPISODES_RUNTIME_TO_FIX
 
-  const entryTitle = (TITLE != null)
-    ? <h1 className='entry-name'>{TITLE}</h1>
-    : (NAME != null) &&
-      <h1 className='entry-name'>{NAME}</h1>
+  const entryTitle = (ENG_TITLE != null)
+    ? <h1 className='entry-name'>{ENG_TITLE}</h1>
+    : (NAME != null) && <h1 className='entry-name'>{NAME}</h1>
 
   const entryRuntime = ((RUNTIME != null) && (RUNTIME !== 0))
-    ? <span>{RUNTIME} min</span>
-    : ((EPISODE_RUNTIME != null) && (EPISODE_RUNTIME.length !== 0) && (EPISODE_RUNTIME !== '0')) &&
-      <span>{EPISODE_RUNTIME} min</span>
+    ? <span>{toHoursAndMinutes({ fullTime: RUNTIME })}</span>
+    : ((EPISODE_RUNTIME != null) && (EPISODE_RUNTIME !== 0) && ((EPISODE_RUNTIME as number[]).length !== 0)) &&
+      <span>~ {toHoursAndMinutes({ fullTime: EPISODE_RUNTIME as number })}</span>
 
   const imdbLink = (IMDB_ID != null) &&
-                    <a href={`${IMDB_SINGLE_URL}/${IMDB_ID}`} target="_blank" rel="noreferrer">
-                      <img className='imdb-icon' src={IMDB} />
-                    </a>
+    <a href={`${IMDB_SINGLE_URL}/${IMDB_ID}`} target="_blank" rel="noreferrer">
+      <img className='imdb-icon' src={IMDB} />
+    </a>
 
   const homeLink = ((HOMEPAGE != null) && (HOMEPAGE !== '')) &&
-                    <a href={HOMEPAGE} target="_blank" rel="noreferrer">
-                      <img className='href-icon' src={HREF} />
-                    </a>
+    <a href={HOMEPAGE} target="_blank" rel="noreferrer">
+      <img className='href-icon' src={HREF} />
+    </a>
 
   const entryTagline = ((TAGLINE != null) && (TAGLINE !== '')) &&
-                        <div className='tagline'>
-                          {`"${TAGLINE}"`}
-                        </div>
+    <div className='tagline'>
+      {`"${TAGLINE}"`}
+    </div>
+
+  const detailsOrigCountry = (ORIG_COUNTRY != null) && <span><span className='bold'>Country of origin: </span>
+    {ORIG_COUNTRY.map((country) => {
+      const flag = <ReactCountryFlag
+                    countryCode={country}
+                    svg
+                    style={{
+                      width: '2em',
+                      height: '2em',
+                      paddingRight: '5px'
+                    } }
+                      title={country} />
+      return (flag)
+    })}</span>
+
+  const detailsCountries = (COUNTRIES != null) && <span><span className='bold'>Countries: </span>
+    {COUNTRIES.map((country) => {
+      const flag = <ReactCountryFlag
+                    countryCode={country.iso_3166_1 as string}
+                    svg
+                    style={{
+                      width: '2em',
+                      height: '2em',
+                      paddingRight: '5px'
+                    } }
+                      title={country.name} />
+      return (flag)
+    })}</span>
+
+  const detailsAuthors = (AUTHORS != null) &&
+    <><h2>Authors</h2>
+    <div className='group'>
+      {AUTHORS.map((author) => {
+        const { profile_path: authorProfilePath, name: authorName } = author
+        const authorPoster = authorProfilePath as string
+        const authorPosterPath = (authorPoster !== null) ? `${AUTHOR_IMAGE_URL}/${authorPoster}` : DEFAULT_PLACEHOLDER
+        return (
+          <div key={authorName} className='single-in-group'>
+            <img width='100' loading='lazy' src={authorPosterPath} />
+            <span>{authorName}</span>
+          </div>)
+      })}
+    </div></>
+
+  const collectionPoster = COLLECTION?.backdrop_path as string
+  const collectionPosterPath = (collectionPoster !== null) ? `${BACKDROP_URL}/${collectionPoster}` : DEFAULT_PLACEHOLDER
+  const detailsSeasonsOrCollections = (COLLECTION != null)
+    ? <><h2>Part of collection</h2>
+        <div className='group'>
+          <div key={COLLECTION.name} className='single-in-group'>
+            <img width='100' loading='lazy' src={collectionPosterPath} />
+            <span>{COLLECTION.name}</span>
+          </div>
+        </div></>
+    : (SEASONS != null) &&
+      <><h2>Seasons</h2>
+      <div className='group'>
+      {SEASONS.map((season) => {
+        const { poster_path: seasonPath, name: seasonName } = season
+        const seasonPoster = seasonPath as string
+        const seasonPosterPath = (seasonPoster !== null) ? `${BACKDROP_URL}/${seasonPoster}` : DEFAULT_PLACEHOLDER
+        return (
+          <div key={seasonName} className='single-in-group'>
+            <img width='100' loading='lazy' src={seasonPosterPath} />
+            <span>{seasonName}</span>
+          </div>)
+      })}</div></>
+
+  const detailsCompanies = (COMPANIES != null) &&
+    <><h2>Companies</h2>
+    <div className='group'>
+      {COMPANIES.map((company) => {
+        const { id: companyId, name: companyName, logo_path: companyLogo } = company
+        const companyPoster = companyLogo as string
+        const companyPosterPath = (companyPoster !== null) ? `${ORIGINAL_IMAGE_URL}/${companyPoster}` : DEFAULT_PLACEHOLDER
+        return (
+          <div key={companyId} className='single-in-group'>
+            <img width='100' loading='lazy' src={companyPosterPath} />
+            <span>{companyName}</span>
+          </div>)
+      })}
+    </div></>
+
+  const detailsNetworks = (NETWORKS != null) &&
+    <><h2>Networks</h2>
+    <div className='group'>
+      {NETWORKS.map((network) => {
+        const { name: networkName, logo_path: networkLogo } = network
+        const networkPoster = networkLogo as string
+        const networkPosterPath = (networkPoster !== null) ? `${ORIGINAL_IMAGE_URL}/${networkPoster}` : DEFAULT_PLACEHOLDER
+        return (
+          <div key={networkName} className='single-in-group'>
+            <img width='100' loading='lazy' src={networkPosterPath} />
+            <span>{networkName}</span>
+          </div>)
+      })}
+    </div></>
 
   return (
     <>
