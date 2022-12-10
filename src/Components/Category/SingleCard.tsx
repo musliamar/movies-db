@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ISingleEntryData } from '../../interfaces'
-import { MEDIA_URL } from '../../constants'
-import DEFAULT_IMAGE from '../../default.png'
+import { ISingleEntryData } from '../../lib/interfaces'
+import { MEDIA_URL } from '../../lib/constants'
+import DEFAULT_IMAGE from '../../media/default.png'
 
 interface Props {
   category: string
@@ -33,15 +33,15 @@ function SingleCard ({ category, data }: Props): JSX.Element {
     : (NAME != null) && <span className='entry-name'>{NAME}</span>
 
   const entryNumberOfVotes = (NUMBER_OF_VOTES !== 0) &&
-                              <div className='number-of-votes'>
-                                {NUMBER_OF_VOTES} votes
-                              </div>
+    <div className='number-of-votes'>
+      {NUMBER_OF_VOTES === 1 ? `${NUMBER_OF_VOTES} vote` : `${NUMBER_OF_VOTES as number} votes`}
+    </div>
 
   const entryAverageVote = (AVERAGE_VOTE !== 0.0) &&
-                              <div className='average-vote'>
-                                <span className='average-vote-text'>avg. vote</span>
-                                <span className='average-vote-label'>{AVERAGE_VOTE}</span>
-                              </div>
+    <div className='average-vote'>
+      <span className='average-vote-text'>avg. vote</span>
+      <span className='average-vote-label'>{AVERAGE_VOTE}</span>
+    </div>
 
   return (
       <Link

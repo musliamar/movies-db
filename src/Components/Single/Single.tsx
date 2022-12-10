@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { fetchSingle, fetchTrailer } from '../../queries'
-import { ISingleEntryData, IVideosData, ISingleAllData } from '../../interfaces'
+import { fetchSingle, fetchTrailer } from '../../lib/queries'
+import { ISingleEntryData, IVideosData, ISingleAllData } from '../../lib/interfaces'
 import SingleContainer from './SingleContainer'
 import './Single.css'
 

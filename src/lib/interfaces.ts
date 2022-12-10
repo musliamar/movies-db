@@ -81,10 +81,10 @@ export interface ISingleEntryData {
     id?: number
     logo_path?: string
     name?: string
-    origin_country?: string}]
+    origin_country?: string }]
   production_countries?: [{
     iso_3166_1?: string
-    name?: string}]
+    name?: string }]
   seasons?: [{
     air_date?: string
     episode_count?: number
@@ -96,7 +96,7 @@ export interface ISingleEntryData {
   spoken_languages?: [{
     english_name?: string
     iso_639_1?: string
-    name?: string}]
+    name?: string }]
   status?: string
   tagline?: string
   type?: string

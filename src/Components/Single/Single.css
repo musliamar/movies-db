@@ -50,7 +50,6 @@
     background-color: #242424;
     border-radius: 20px;
     padding: 20px;
-    padding-bottom: 40px;
     min-height: 600px;
     display: flex;
     flex-direction: column;
@@ -115,6 +114,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 3%;
+    row-gap: 20px;
 }
 
 .single-entry-container .left-details {
@@ -153,96 +153,49 @@ iframe {
     border-width: 0px;
     left: 0;
     top: 0;
-    height: 100%;
+    height: 300px;
     width: 100%;
-    position: absolute;
     border-radius: 20px;
 }
 
-.youtube-embed {
-    overflow: hidden;
-    padding-bottom: 40%;
-    position: relative;
-    height: 0;
-}
-
-@media (min-width: 1430px) {
-    .single-entry-container {
-        min-height: 680px;
-    }
-    .youtube-embed {
-        padding-bottom: 36%;
+@media (min-width: 1400px) {
+    iframe {
+        height: 500px;
     }
 }
 
-@media (min-width: 1400px) and (max-width: 1430px) {
-    .single-entry-container {
-        min-height: 620px;
-    }
-    .youtube-embed {
-        padding-bottom: 38%;
+@media (min-width: 1000px) and (max-width: 1399px) {
+    iframe {
+        height: 400px;
     }
 }
 
-@media (min-width: 1201px) and (max-width: 1400px) {
-    .single-entry-container {
-        min-height: 660px;
-    }
-    .youtube-embed {
-        padding-bottom: 43%;
-    }
-}
-
-@media (min-width: 1100px) and (max-width: 1200px) {
-    .single-entry-container {
-        min-height: 660px;
-    }
-    .youtube-embed {
-        padding-bottom: 53%;
-    }
-}
-
-@media (min-width: 1081px) and (max-width: 1100px) {
-    .single-entry-container {
-        min-height: 660px;
-    }
-    .youtube-embed {
-        padding-bottom: 52%;
+@media (min-width: 600px) and (max-width: 999px) {
+    iframe {
+        height: 300px;
     }
 }
 
 @media (min-width: 881px) and (max-width: 1080px) {
-    .youtube-embed {
-        padding-bottom: 60%;
-    }
-    .single-entry-container .right-details {
-        width: 100%;
-    }
     .single-entry-container .group {
         flex-wrap: wrap;
     }
 }
 
 @media (min-width: 501px) and (max-width: 880px) {
-    .youtube-embed {
-        padding-bottom: 73%;
-    }
-    .single-entry-container .right-details {
-        width: 100%;
-    }
     .single-entry-container .group {
         flex-wrap: wrap;
+    }
+    .single-entry-container .single-in-group {
+        align-items: flex-start;
     }
 }
 
 @media (max-width: 500px) {
-    .youtube-embed {
-        padding-bottom: 96%;
-    }
-    .single-entry-container .right-details {
-        width: 100%;
-    }
     .single-entry-container .group {
         flex-wrap: wrap;
+    }
+    .single-entry-container .single-in-group {
+        align-items: flex-start;
     }
 }

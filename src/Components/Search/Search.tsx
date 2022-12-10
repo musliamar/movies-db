@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
-import { useDispatch, useStore } from '../../context'
-import { SET_SEARCH } from '../../constants'
+import { useDispatch, useStore } from '../../lib/context'
+import { SET_SEARCH } from '../../lib/constants'
 import './Search.css'
 
 function Search (): JSX.Element {
