@@ -29,6 +29,7 @@ function Category (): JSX.Element {
       fetchTopRated({ categoryToFetch })
         .then((data: IEntriesData) => {
           const { results } = data
+          setError('')
           setCurrentData(results.slice(0, 10))
         }).catch(() => {
           setError('Unable to find category.')
@@ -40,6 +41,7 @@ function Category (): JSX.Element {
           if (results.length === 0) {
             setError('Nothing found for that search term.')
           } else {
+            setError('')
             setCurrentData(results)
           }
         }).catch(() => {

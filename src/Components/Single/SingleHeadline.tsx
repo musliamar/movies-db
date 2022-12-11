@@ -60,12 +60,12 @@ function Headline ({ detailsData }: Props): JSX.Element {
 
   const imdbLink = (IMDB_ID != null) &&
     <a href={`${IMDB_SINGLE_URL}/${IMDB_ID}`} target="_blank" rel="noreferrer">
-      <img className='imdb-icon' src={IMDB} />
+      <img className='imdb-icon' src={IMDB} alt='Visit IMDB profile' />
     </a>
 
   const homeLink = ((HOMEPAGE != null) && (HOMEPAGE !== '')) &&
     <a href={HOMEPAGE} target="_blank" rel="noreferrer">
-      <img className='href-icon' src={HREF} />
+      <img className='href-icon' src={HREF} alt='Visit homepage' />
     </a>
 
   return (

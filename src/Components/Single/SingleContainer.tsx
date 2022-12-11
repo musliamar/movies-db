@@ -45,7 +45,7 @@ function SingleContainer ({ allData }: Props): JSX.Element {
 
   const image = POSTER as string
   const singlePosterPath = (image !== null) ? `${MEDIA_URL}/${image}` : DEFAULT_IMAGE
-  const entryPoster = (FIRST_TRAILER_KEY !== false) ? TRAILER_EMBED : <img className='entry-poster' loading='lazy' src={singlePosterPath} />
+  const entryPoster = (FIRST_TRAILER_KEY !== false) ? TRAILER_EMBED : <img className='entry-poster' loading='lazy' alt='Poster image' src={singlePosterPath} />
 
   return (
     <>

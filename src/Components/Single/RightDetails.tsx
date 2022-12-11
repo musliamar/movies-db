@@ -25,7 +25,7 @@ function Right ({ detailsData }: Props): JSX.Element {
         const authorPosterPath = (authorPoster !== null) ? `${AUTHOR_IMAGE_URL}/${authorPoster}` : DEFAULT_PLACEHOLDER
         return (
           <div key={authorName} className='single-in-group'>
-            <img width='100' loading='lazy' src={authorPosterPath} />
+            <img width='100' loading='lazy' src={authorPosterPath} alt='Author picture' />
             <span>{authorName}</span>
           </div>)
       })}
@@ -38,7 +38,7 @@ function Right ({ detailsData }: Props): JSX.Element {
     ? <><h2>Part of collection</h2>
         <div className='group'>
           <div key={COLLECTION.name} className='single-in-group'>
-            <img width='100' loading='lazy' src={collectionPosterPath} />
+            <img width='100' loading='lazy' src={collectionPosterPath} alt='Collection poster' />
             <span>{COLLECTION.name}</span>
           </div>
         </div></>
@@ -51,7 +51,7 @@ function Right ({ detailsData }: Props): JSX.Element {
         const seasonPosterPath = (seasonPoster !== null) ? `${BACKDROP_URL}/${seasonPoster}` : DEFAULT_PLACEHOLDER
         return (
           <div key={seasonName} className='single-in-group'>
-            <img width='100' loading='lazy' src={seasonPosterPath} />
+            <img width='100' loading='lazy' src={seasonPosterPath} alt='Season poster' />
             <span>{seasonName}</span>
           </div>)
       })}</div></>
@@ -65,7 +65,7 @@ function Right ({ detailsData }: Props): JSX.Element {
         const companyPosterPath = (companyPoster !== null) ? `${ORIGINAL_IMAGE_URL}/${companyPoster}` : DEFAULT_PLACEHOLDER
         return (
           <div key={companyId} className='single-in-group'>
-            <img width='100' loading='lazy' src={companyPosterPath} />
+            <img width='100' loading='lazy' src={companyPosterPath} alt='Company logo' />
             <span>{companyName}</span>
           </div>)
       })}
@@ -80,7 +80,7 @@ function Right ({ detailsData }: Props): JSX.Element {
         const networkPosterPath = (networkPoster !== null) ? `${ORIGINAL_IMAGE_URL}/${networkPoster}` : DEFAULT_PLACEHOLDER
         return (
           <div key={networkName} className='single-in-group'>
-            <img width='100' loading='lazy' src={networkPosterPath} />
+            <img width='100' loading='lazy' src={networkPosterPath} alt='Network logo' />
             <span>{networkName}</span>
           </div>)
       })}
