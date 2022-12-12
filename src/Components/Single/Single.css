@@ -73,6 +73,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 5px;
+    text-align: center;
 }
 
 .single-entry-container .title-and-votes {
@@ -83,7 +84,6 @@
     column-gap: 20px;
     row-gap: 10px;
     margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .single-entry-container .links {
@@ -104,6 +104,13 @@
 
 .single-entry-container .entry-overview {
     line-height: 20px;
+}
+
+.single-entry-container .entry-name {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
 }
 
 .single-entry-container .imdb-icon, .single-entry-container .href-icon {

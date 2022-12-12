@@ -40,7 +40,7 @@ function Headline ({ detailsData }: Props): JSX.Element {
   const GENRES_ARRAY = (typeof GENRES_TO_FIX === 'object') ? (GENRES_TO_FIX as any[]).map((genre) => genre.name) : null
   const GENRES = (GENRES_ARRAY != null) ? GENRES_ARRAY.join(', ') : null
 
-  const entryYear = (YEAR != null) && <span>{YEAR}</span>
+  const entryYear = (YEAR != null) && <span>({YEAR})</span>
   const entryGenres = (GENRES_TO_FIX != null) && <span>{GENRES}</span>
   const entryNumberOfVotes = ((VOTES !== 0) && (VOTES !== undefined)) && <span>{VOTES} {VOTES > 1 ? 'votes' : 'vote'} </span>
   const entryAverageVote = (AVERAGE_VOTE !== '0.0') && <span className='average-vote-label'>{AVERAGE_VOTE}</span>
@@ -50,12 +50,25 @@ function Headline ({ detailsData }: Props): JSX.Element {
     : EPISODES_RUNTIME_TO_FIX
 
   const entryTitle = (ENG_TITLE != null)
-    ? <h1 className='entry-name'>{ENG_TITLE}</h1>
-    : (NAME != null) && <h1 className='entry-name'>{NAME}</h1>
+    ? <div className='entry-name'>
+        <h1>{ENG_TITLE} {entryYear}</h1>
+        <div className='votes'>
+          {entryAverageVote}
+          {entryNumberOfVotes}
+        </div>
+      </div>
+    : (NAME != null) &&
+      <div className='entry-name'>
+        <h1>{NAME} {entryYear}</h1>
+        <div className='votes'>
+          {entryAverageVote}
+          {entryNumberOfVotes}
+        </div>
+      </div>
 
   const entryRuntime = ((RUNTIME != null) && (RUNTIME > 0))
     ? <span>{toHoursAndMinutes({ fullTime: RUNTIME })}</span>
-    : ((EPISODE_RUNTIME != null) && (EPISODE_RUNTIME > 0) && ((EPISODE_RUNTIME as number[]).length > 0)) &&
+    : ((EPISODE_RUNTIME != null) && (EPISODE_RUNTIME > 0) && ((EPISODE_RUNTIME as number[]).length !== 0)) &&
       <span>~ {toHoursAndMinutes({ fullTime: EPISODE_RUNTIME as number })}</span>
 
   const imdbLink = (IMDB_ID != null) &&
@@ -72,14 +85,9 @@ function Headline ({ detailsData }: Props): JSX.Element {
     <div className='headline'>
           <div className='title-and-votes'>
             {entryTitle}
-            {entryYear}
             {entryGenres}
           </div>
           <div className='links'>
-            <div className='votes'>
-              {entryAverageVote}
-              {entryNumberOfVotes}
-            </div>
             {entryRuntime}
             {imdbLink}
             {homeLink}
