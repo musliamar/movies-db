@@ -8,8 +8,8 @@ import SingleCard from './SingleCard'
 import './Category.css'
 
 const links = [
-  'movie',
-  'tv'
+  { slug: 'movie', name: 'Movies' },
+  { slug: 'tv', name: 'TV SHOWS' }
 ]
 
 function Category (): JSX.Element {
@@ -55,7 +55,7 @@ function Category (): JSX.Element {
       <header>
         <nav>
         {links.map((link) =>
-          <Link key={link} className={categoryToFetch === link ? 'checked' : undefined} to={`/${link}`}>{link.toUpperCase()}</Link>)}
+          <Link key={link.slug} className={categoryToFetch === link.slug ? 'checked' : undefined} to={`/${link.slug}`}>{link.name.toUpperCase()}</Link>)}
         </nav>
       </header>
       <Search />

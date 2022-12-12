@@ -41,43 +41,43 @@ function Left ({ detailsData }: Props): JSX.Element {
   }
 
   const detailsIsInProduction = (IN_PRODUCTION === true)
-    ? <span className='bold'>Currently in production</span>
-    : <span className='bold'>Not in production</span>
+    ? 'Currently in production'
+    : 'Not in production'
 
   const detailsBudget = (BUDGET != null && BUDGET > 0) &&
-    <span><span className='bold'>Budget: </span> {currencyFormatter.format(BUDGET)}</span>
+    <span className='single-left-detail'><span className='bold'>Budget: </span> {currencyFormatter.format(BUDGET)}</span>
 
   const detailsRevenue = (REVENUE != null && REVENUE > 0) &&
-    <span><span className='bold'>Revenue: </span> {currencyFormatter.format(REVENUE)}</span>
+    <span className='single-left-detail'><span className='bold'>Revenue: </span> {currencyFormatter.format(REVENUE)}</span>
 
   const detailsEpisodes = (NUM_OF_EPISODES != null && NUM_OF_EPISODES > 0) &&
-    <span><span className='bold'>Number of episodes: </span> {NUM_OF_EPISODES}</span>
+    <span className='single-left-detail'><span className='bold'>Number of episodes: </span> {NUM_OF_EPISODES}</span>
 
   const detailsSeasons = (NUM_OF_SEASONS != null && NUM_OF_SEASONS > 0) &&
-    <span><span className='bold'>Number of seasons: </span> {NUM_OF_SEASONS}</span>
+    <span className='single-left-detail'><span className='bold'>Number of seasons: </span> {NUM_OF_SEASONS}</span>
 
   const detailsOrigLanguage = ((LANGUAGE != null) && (LANGUAGE.length > 0)) &&
-    <span><span className='bold'>Original language: </span> {LANGUAGE}</span>
+    <span className='single-left-detail'><span className='bold'>Original language: </span> {LANGUAGE}</span>
 
   const detailsLanguages = ((LANGUAGES != null) && (LANGUAGES.length > 0)) &&
-    <span><span className='bold'>{LANGUAGES.length > 1 ? 'Languages' : 'Language'}: </span>
+    <span className='single-left-detail'><span className='bold'>{LANGUAGES.length > 1 ? 'Languages' : 'Language'}: </span>
     {LANGUAGES.map((language, index) => `${language}${index === LANGUAGES.length - 1 ? '' : ', '}`)}</span>
 
   const detailsSpokenLanguages = ((SPOKEN_LANGUAGES != null) && (SPOKEN_LANGUAGES.length > 0)) &&
-    <span><span className='bold'>{SPOKEN_LANGUAGES.length > 1 ? 'Spoken languages' : 'Spoken language'}: </span>
+    <span className='single-left-detail'><span className='bold'>{SPOKEN_LANGUAGES.length > 1 ? 'Spoken languages' : 'Spoken language'}: </span>
     {SPOKEN_LANGUAGES.map((language, index) => `${language.english_name as string}${index === SPOKEN_LANGUAGES.length - 1 ? '' : ', '}`)}</span>
 
   const detailsStatus = (STATUS != null) &&
-    <span><span className='bold'>Status: </span> {STATUS}</span>
+    <span className='single-left-detail'><span className='bold'>Status: </span> {STATUS} - {detailsIsInProduction}</span>
 
   const detailsLastAirDate = (LAST_AIR_DATE != null) &&
-    <span><span className='bold'>Last air date: </span> {dateFormatter({ dateString: LAST_AIR_DATE })}</span>
+    <span className='single-left-detail'><span className='bold'>Last air date: </span> {dateFormatter({ dateString: LAST_AIR_DATE })}</span>
 
   const detailsOriginalTitle = (ORIGINAL_TITLE != null)
-    ? <span><span className='bold'>Original title:</span> {ORIGINAL_TITLE}</span>
-    : (ORIGINAL_NAME != null) && <span><span className='bold'>Original name: </span> {ORIGINAL_NAME}</span>
+    ? <span className='single-left-detail'><span className='bold'>Original title:</span> {ORIGINAL_TITLE}</span>
+    : (ORIGINAL_NAME != null) && <span className='single-left-detail'><span className='bold'>Original name: </span> {ORIGINAL_NAME}</span>
 
-  const detailsOrigCountry = ((ORIG_COUNTRY != null) && (ORIG_COUNTRY.length > 0)) && <span><span className='bold'>{ORIG_COUNTRY.length > 1 ? 'Countries of origin' : 'Country of origin'}: </span>
+  const detailsOrigCountry = ((ORIG_COUNTRY != null) && (ORIG_COUNTRY.length > 0)) && <span className='single-left-detail'><span className='bold'>{ORIG_COUNTRY.length > 1 ? 'Countries of origin' : 'Country of origin'}: </span>
     {ORIG_COUNTRY.map((country) => {
       const flag = <ReactCountryFlag
                     key={country}
@@ -92,7 +92,7 @@ function Left ({ detailsData }: Props): JSX.Element {
       return (flag)
     })}</span>
 
-  const detailsCountries = ((COUNTRIES != null) && (COUNTRIES.length > 0)) && <span><span className='bold'>{COUNTRIES.length > 1 ? 'Countries' : 'Country'}: </span>
+  const detailsCountries = ((COUNTRIES != null) && (COUNTRIES.length > 0)) && <span className='single-left-detail'><span className='bold'>{COUNTRIES.length > 1 ? 'Countries' : 'Country'}: </span>
     {COUNTRIES.map((country) => {
       const flag = <ReactCountryFlag
                     key={country.name}
@@ -121,7 +121,6 @@ function Left ({ detailsData }: Props): JSX.Element {
           {detailsOrigCountry}
           {detailsCountries}
           {detailsStatus}
-          {detailsIsInProduction}
           {detailsLastAirDate}
         </div>
   )
