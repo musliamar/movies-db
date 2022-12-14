@@ -35,7 +35,6 @@ function Category (): JSX.Element {
           const { results } = data
           setCurrentData(results.slice(0, 10))
           setLoading({ message: '', status: 'success' })
-          dispatch({ type: SET_PROGRESS_VALUE, payload: 30 })
         }).catch(() => {
           setLoading({ message: 'Unable to find category.', status: 'error' })
           dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
@@ -52,7 +51,6 @@ function Category (): JSX.Element {
           } else {
             setCurrentData(results)
             setLoading({ message: '', status: 'success' })
-            dispatch({ type: SET_PROGRESS_VALUE, payload: 30 })
           }
         }).catch(() => {
           setLoading({ message: 'Unable to retrieve data.', status: 'error' })
