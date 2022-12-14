@@ -37,6 +37,7 @@ function Category (): JSX.Element {
           setLoading({ message: 'Unable to find category.', status: 'error' })
         })
     } else {
+      setLoading({ message: '', status: 'loading' })
       fetchByString({ categoryToFetch, queryToFetch })
         .then((data: IEntriesData) => {
           const { results } = data
@@ -65,10 +66,11 @@ function Category (): JSX.Element {
         <>
           {(currentData.length !== 0 && status === 'success') &&
             currentData.map((single): ISingleEntryData =>
-            <Suspense key={single.id}fallback={<Spinner />}>
+            <Suspense key={single.id} fallback={<Spinner />}>
               <SingleCard category={categoryToFetch} data={single} />
             </Suspense>)}
           {status === 'error' && <p className='error'>{message}</p>}
+          {status === 'loading' && <Spinner />}
         </>
       </main>
     </>
