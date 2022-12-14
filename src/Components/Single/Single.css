@@ -125,8 +125,13 @@
     row-gap: 20px;
 }
 
+.single-entry-container .entry-poster-wrapper {
+    position: relative;
+}
+
 .single-entry-container .entry-poster {
     width: 100%;
+    border-radius: 20px;
 }
 
 .single-entry-container .left-details {

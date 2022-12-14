@@ -11,6 +11,7 @@ interface Props {
 
 function SingleCard ({ category, data }: Props): JSX.Element {
   const [hover, setHover] = useState(0)
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
 
   const {
     id,
@@ -52,11 +53,15 @@ function SingleCard ({ category, data }: Props): JSX.Element {
         className='entry-card'>
         <div className='poster-wrapper'>
         <img
-            className={hover === id ? 'entry-poster opacity' : 'entry-poster'}
+            className={isImageLoaded ? ((hover === id) ? 'entry-poster opacity' : 'entry-poster') : 'entry-poster transparent'}
             src={singlePosterPath}
             alt='Poster image'
             loading='lazy'
+            onLoad={() => setIsImageLoaded(true)}
           />
+          {!isImageLoaded && <div className="placeholder-parent">
+            <div className="placeholder-child"></div>
+              </div>}
           {hover === id &&
             <>
               {entryAverageVote}

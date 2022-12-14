@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ISingleAllData, ISingleVideoData } from '../../lib/interfaces'
 import { IMDB_SINGLE_URL, MEDIA_URL } from '../../lib/constants'
 import IMDB from '../../media/imdb.png'
@@ -10,6 +10,7 @@ interface Props {
 }
 
 function Headline ({ allData }: Props): JSX.Element {
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
   const { detailsData, videosData } = allData
   const {
     poster_path: POSTER,
@@ -90,6 +91,7 @@ function Headline ({ allData }: Props): JSX.Element {
   const TRAILER_EMBED = (FIRST_TRAILER_KEY !== false) &&
     <div className='youtube-embed'>
       <iframe
+      onLoad={() => setIsImageLoaded(true)}
       loading='lazy'
       src={`https://www.youtube-nocookie.com/embed/${FIRST_TRAILER_KEY}`}
       title="YouTube video player"
@@ -99,11 +101,23 @@ function Headline ({ allData }: Props): JSX.Element {
 
   const image = POSTER as string
   const singlePosterPath = (image !== null) ? `${MEDIA_URL}/${image}` : DEFAULT_IMAGE
-  const entryPoster = (FIRST_TRAILER_KEY !== false) ? TRAILER_EMBED : <img className='entry-poster' loading='lazy' alt='Poster image' src={singlePosterPath} />
+  const entryPoster = (FIRST_TRAILER_KEY !== false)
+    ? TRAILER_EMBED
+    : <><img
+        onLoad={() => setIsImageLoaded(true)}
+        className={isImageLoaded ? 'entry-poster' : 'entry-poster transparent'}
+        loading='lazy'
+        alt='Poster image'
+        src={singlePosterPath} /></>
 
   return (
     <>
-    {entryPoster}
+    <div className='entry-poster-wrapper'>
+      {entryPoster}
+      {!isImageLoaded && <div className="placeholder-parent">
+          <div className="placeholder-child"></div>
+        </div>}
+    </div>
     <div className='headline'>
           <div className='title-and-votes'>
             {entryTitle}
