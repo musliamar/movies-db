@@ -1,6 +1,8 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useEffect } from 'react'
 import { ISingleAllData } from '../../lib/interfaces'
 import Spinner from '../Spinner'
+import { useDispatch } from '../../lib/context'
+import { SET_PROGRESS_VALUE } from '../../lib/constants'
 
 const LeftDetails = lazy(async () => await import('./LeftDetails'))
 const RightDetails = lazy(async () => await import('./RightDetails'))
@@ -12,6 +14,7 @@ interface Props {
 
 function SingleContainer ({ allData }: Props): JSX.Element {
   const { detailsData } = allData
+  const dispatch = useDispatch()
 
   const {
     overview: OVERVIEW,
@@ -28,6 +31,10 @@ function SingleContainer ({ allData }: Props): JSX.Element {
       <h2>Overview</h2>
       {OVERVIEW}
     </div>
+
+  useEffect(() => {
+    dispatch({ type: SET_PROGRESS_VALUE, payload: 70 })
+  }, [])
 
   return (
     <>

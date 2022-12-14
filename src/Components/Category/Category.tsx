@@ -1,8 +1,9 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { useStore } from '../../lib/context'
+import { useStore, useDispatch } from '../../lib/context'
 import { fetchTopRated, fetchByString } from '../../lib/queries'
 import { IEntriesData, ISingleEntryData } from '../../lib/interfaces'
+import { SET_PROGRESS_VALUE, RESET_LOADED_IMAGES } from '../../lib/constants'
 import Search from '../Search/Search'
 import Spinner from '../Spinner'
 import './Category.css'
@@ -19,14 +20,16 @@ function Category (): JSX.Element {
   const [currentData, setCurrentData] = useState(initialCurrentData)
   const [loading, setLoading] = useState({ message: '', status: '' })
   const { status, message } = loading
+  const dispatch = useDispatch()
   const { category } = useParams()
-  const { searchInput } = useStore()
+  const { searchInput, loadedImagesOnCategory } = useStore()
 
   let categoryToFetch: string = category as string
   const queryToFetch: string = searchInput
   if (category === undefined) categoryToFetch = 'tv'
 
   useEffect(() => {
+    dispatch({ type: SET_PROGRESS_VALUE, payload: 0 })
     if (searchInput.length < 3) {
       fetchTopRated({ categoryToFetch })
         .then((data: IEntriesData) => {
@@ -35,23 +38,34 @@ function Category (): JSX.Element {
           setLoading({ message: '', status: 'success' })
         }).catch(() => {
           setLoading({ message: 'Unable to find category.', status: 'error' })
+          dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
         })
     } else {
+      dispatch({ type: SET_PROGRESS_VALUE, payload: 10 })
       setLoading({ message: '', status: 'loading' })
       fetchByString({ categoryToFetch, queryToFetch })
         .then((data: IEntriesData) => {
           const { results } = data
           if (results.length === 0) {
             setLoading({ message: 'Nothing found for that search term.', status: 'error' })
+            dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
           } else {
             setCurrentData(results)
             setLoading({ message: '', status: 'success' })
           }
         }).catch(() => {
           setLoading({ message: 'Unable to retrieve data.', status: 'error' })
+          dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
         })
     }
   }, [category, searchInput])
+
+  useEffect(() => {
+    if (loadedImagesOnCategory === currentData.length) {
+      dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
+      dispatch({ type: RESET_LOADED_IMAGES })
+    }
+  }, [loadedImagesOnCategory])
 
   return (
     <>

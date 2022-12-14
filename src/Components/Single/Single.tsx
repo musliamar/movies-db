@@ -1,6 +1,8 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { fetchSingle, fetchTrailer } from '../../lib/queries'
+import { useDispatch } from '../../lib/context'
+import { SET_PROGRESS_VALUE } from '../../lib/constants'
 import { ISingleEntryData, IVideosData, ISingleAllData } from '../../lib/interfaces'
 import Spinner from '../Spinner'
 import './Single.css'
@@ -13,12 +15,14 @@ function Single (): JSX.Element {
   const [loading, setLoading] = useState({ message: '', status: '' })
   const { status, message } = loading
   const { category, singleId } = useParams()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   let categoryToFetch: string = category as string
   const idToFetch: string = singleId as string
   if (category === undefined) categoryToFetch = 'movie'
 
   useEffect(() => {
+    dispatch({ type: SET_PROGRESS_VALUE, payload: 10 })
     fetchSingle({ categoryToFetch, idToFetch })
       .then((detailsData: ISingleEntryData) => {
         fetchTrailer({ categoryToFetch, idToFetch })
@@ -28,8 +32,10 @@ function Single (): JSX.Element {
             setSingleData({ detailsData })
           })
         setLoading({ message: '', status: 'success' })
+        dispatch({ type: SET_PROGRESS_VALUE, payload: 30 })
       }).catch(() => {
         setLoading({ message: 'There is nothing on this path.', status: 'error' })
+        dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
       })
   }, [])
 

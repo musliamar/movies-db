@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from '../../lib/context'
 import { ISingleEntryData } from '../../lib/interfaces'
-import { MEDIA_URL } from '../../lib/constants'
+import { MEDIA_URL, INCREASE_LOADED_IMAGES } from '../../lib/constants'
 import DEFAULT_IMAGE from '../../media/default.png'
+import Placeholder from '../Placeholder'
 
 interface Props {
   category: string
@@ -11,6 +13,7 @@ interface Props {
 
 function SingleCard ({ category, data }: Props): JSX.Element {
   const [hover, setHover] = useState(0)
+  const dispatch = useDispatch()
   const [isImageLoaded, setIsImageLoaded] = useState(false)
 
   const {
@@ -44,6 +47,10 @@ function SingleCard ({ category, data }: Props): JSX.Element {
       <span className='average-vote-label'>{AVERAGE_VOTE}</span>
     </div>
 
+  useEffect(() => {
+    isImageLoaded && dispatch({ type: INCREASE_LOADED_IMAGES })
+  }, [isImageLoaded])
+
   return (
       <Link
         to={`/${category}/${singleId}`}
@@ -59,9 +66,7 @@ function SingleCard ({ category, data }: Props): JSX.Element {
             loading='lazy'
             onLoad={() => setIsImageLoaded(true)}
           />
-          {!isImageLoaded && <div className="placeholder-parent">
-            <div className="placeholder-child"></div>
-              </div>}
+          {!isImageLoaded && <Placeholder />}
           {hover === id &&
             <>
               {entryAverageVote}
