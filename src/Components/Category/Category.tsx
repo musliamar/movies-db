@@ -29,7 +29,6 @@ function Category (): JSX.Element {
   if (category === undefined) categoryToFetch = 'tv'
 
   useEffect(() => {
-    dispatch({ type: SET_PROGRESS_VALUE, payload: 0 })
     if (searchInput.length < 3) {
       fetchTopRated({ categoryToFetch })
         .then((data: IEntriesData) => {
