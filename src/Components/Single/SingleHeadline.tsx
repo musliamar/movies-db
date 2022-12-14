@@ -1,15 +1,18 @@
 import React from 'react'
-import { ISingleEntryData } from '../../lib/interfaces'
-import { IMDB_SINGLE_URL } from '../../lib/constants'
+import { ISingleAllData, ISingleVideoData } from '../../lib/interfaces'
+import { IMDB_SINGLE_URL, MEDIA_URL } from '../../lib/constants'
 import IMDB from '../../media/imdb.png'
 import HREF from '../../media/href.png'
+import DEFAULT_IMAGE from '../../media/default.png'
 
 interface Props {
-  detailsData: ISingleEntryData
+  allData: ISingleAllData
 }
 
-function Headline ({ detailsData }: Props): JSX.Element {
+function Headline ({ allData }: Props): JSX.Element {
+  const { detailsData, videosData } = allData
   const {
+    poster_path: POSTER,
     title: ENG_TITLE,
     name: NAME,
     vote_count: VOTES,
@@ -81,7 +84,26 @@ function Headline ({ detailsData }: Props): JSX.Element {
       <img className='href-icon' src={HREF} alt='Visit homepage' />
     </a>
 
+  const TRAILERS = videosData?.filter((video: ISingleVideoData) => (video.official) && (video.type === 'Trailer') && (video.site === 'YouTube'))
+  const FIRST_TRAILER_KEY = ((TRAILERS != null) && (TRAILERS !== undefined) && (TRAILERS.length > 0)) && TRAILERS[0].key
+
+  const TRAILER_EMBED = (FIRST_TRAILER_KEY !== false) &&
+    <div className='youtube-embed'>
+      <iframe
+      loading='lazy'
+      src={`https://www.youtube-nocookie.com/embed/${FIRST_TRAILER_KEY}`}
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen />
+    </div>
+
+  const image = POSTER as string
+  const singlePosterPath = (image !== null) ? `${MEDIA_URL}/${image}` : DEFAULT_IMAGE
+  const entryPoster = (FIRST_TRAILER_KEY !== false) ? TRAILER_EMBED : <img className='entry-poster' loading='lazy' alt='Poster image' src={singlePosterPath} />
+
   return (
+    <>
+    {entryPoster}
     <div className='headline'>
           <div className='title-and-votes'>
             {entryTitle}
@@ -93,6 +115,7 @@ function Headline ({ detailsData }: Props): JSX.Element {
             {homeLink}
           </div>
     </div>
+    </>
   )
 }
 

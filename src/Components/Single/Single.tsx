@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { fetchSingle, fetchTrailer } from '../../lib/queries'
 import { ISingleEntryData, IVideosData, ISingleAllData } from '../../lib/interfaces'
-import SingleContainer from './SingleContainer'
+import Spinner from '../Spinner'
 import './Single.css'
+
+const SingleContainer = lazy(async () => await import('./SingleContainer'))
 
 function Single (): JSX.Element {
   const initialSingleData: ISingleAllData = { detailsData: {} }
   const [singleData, setSingleData] = useState(initialSingleData)
-  const [error, setError] = useState('')
+  const [loading, setLoading] = useState({ message: '', status: '' })
+  const { status, message } = loading
   const { category, singleId } = useParams()
   const navigate = useNavigate()
   let categoryToFetch: string = category as string
@@ -24,17 +27,20 @@ function Single (): JSX.Element {
           }).catch(() => {
             setSingleData({ detailsData })
           })
+        setLoading({ message: '', status: 'success' })
       }).catch(() => {
-        setError('There is nothing on this path.')
+        setLoading({ message: 'There is nothing on this path.', status: 'error' })
       })
-  }, [category])
+  }, [])
 
   return (
     <>
       <button className='go-back' onClick={() => navigate(-1)}>Go back</button>
       <main className='single-entry-container'>
-        {((error === '') && (singleData !== null)) && <SingleContainer allData={singleData} />}
-        {error !== '' && <p>{error}</p>}
+        {((status === 'success') && (singleData !== null)) &&
+          <Suspense fallback={<Spinner />}><SingleContainer allData={singleData} /></Suspense>
+        }
+        {status === 'error' && <p className='error'>{message}</p>}
       </main>
     </>
   )

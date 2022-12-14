@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useStore } from '../../lib/context'
 import { fetchTopRated, fetchByString } from '../../lib/queries'
 import { IEntriesData, ISingleEntryData } from '../../lib/interfaces'
 import Search from '../Search/Search'
-import SingleCard from './SingleCard'
+import Spinner from '../Spinner'
 import './Category.css'
+
+const SingleCard = lazy(async () => await import('./SingleCard'))
 
 const links = [
   { slug: 'movie', name: 'Movies' },
@@ -15,7 +17,8 @@ const links = [
 function Category (): JSX.Element {
   const initialCurrentData: ISingleEntryData[] = []
   const [currentData, setCurrentData] = useState(initialCurrentData)
-  const [error, setError] = useState('')
+  const [loading, setLoading] = useState({ message: '', status: '' })
+  const { status, message } = loading
   const { category } = useParams()
   const { searchInput } = useStore()
 
@@ -25,27 +28,26 @@ function Category (): JSX.Element {
 
   useEffect(() => {
     if (searchInput.length < 3) {
-      setError('')
       fetchTopRated({ categoryToFetch })
         .then((data: IEntriesData) => {
           const { results } = data
-          setError('')
           setCurrentData(results.slice(0, 10))
+          setLoading({ message: '', status: 'success' })
         }).catch(() => {
-          setError('Unable to find category.')
+          setLoading({ message: 'Unable to find category.', status: 'error' })
         })
     } else {
       fetchByString({ categoryToFetch, queryToFetch })
         .then((data: IEntriesData) => {
           const { results } = data
           if (results.length === 0) {
-            setError('Nothing found for that search term.')
+            setLoading({ message: 'Nothing found for that search term.', status: 'error' })
           } else {
-            setError('')
             setCurrentData(results)
+            setLoading({ message: '', status: 'success' })
           }
         }).catch(() => {
-          setError('Unable to retrieve data.')
+          setLoading({ message: 'Unable to retrieve data.', status: 'error' })
         })
     }
   }, [category, searchInput])
@@ -61,10 +63,12 @@ function Category (): JSX.Element {
       <Search />
       <main className='entries-container'>
         <>
-          {(currentData.length !== 0 && error === '') &&
+          {(currentData.length !== 0 && status === 'success') &&
             currentData.map((single): ISingleEntryData =>
-              <SingleCard key={single.id} category={categoryToFetch} data={single} />)}
-          {error !== '' && <p className='error'>{error}</p>}
+            <Suspense key={single.id}fallback={<Spinner />}>
+              <SingleCard category={categoryToFetch} data={single} />
+            </Suspense>)}
+          {status === 'error' && <p className='error'>{message}</p>}
         </>
       </main>
     </>

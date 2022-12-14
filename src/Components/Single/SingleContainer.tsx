@@ -1,26 +1,22 @@
-import React from 'react'
-import { ISingleAllData, ISingleVideoData } from '../../lib/interfaces'
-import { MEDIA_URL } from '../../lib/constants'
-import DEFAULT_IMAGE from '../../media/default.png'
-import Headline from './SingleHeadline'
-import LeftDetails from './LeftDetails'
-import RightDetails from './RightDetails'
+import React, { lazy, Suspense } from 'react'
+import { ISingleAllData } from '../../lib/interfaces'
+import Spinner from '../Spinner'
+
+const LeftDetails = lazy(async () => await import('./LeftDetails'))
+const RightDetails = lazy(async () => await import('./RightDetails'))
+const Headline = lazy(async () => await import('./SingleHeadline'))
 
 interface Props {
   allData: ISingleAllData
 }
 
 function SingleContainer ({ allData }: Props): JSX.Element {
-  const { detailsData, videosData } = allData
+  const { detailsData } = allData
 
   const {
-    poster_path: POSTER,
     overview: OVERVIEW,
     tagline: TAGLINE
   } = detailsData
-
-  const TRAILERS = videosData?.filter((video: ISingleVideoData) => (video.official) && (video.type === 'Trailer') && (video.site === 'YouTube'))
-  const FIRST_TRAILER_KEY = ((TRAILERS != null) && (TRAILERS !== undefined) && (TRAILERS.length > 0)) && TRAILERS[0].key
 
   const entryTagline = ((TAGLINE != null) && (TAGLINE !== '')) &&
     <div className='tagline'>
@@ -33,31 +29,22 @@ function SingleContainer ({ allData }: Props): JSX.Element {
       {OVERVIEW}
     </div>
 
-  const TRAILER_EMBED = (FIRST_TRAILER_KEY !== false) &&
-    <div className='youtube-embed'>
-      <iframe
-      loading='lazy'
-      src={`https://www.youtube-nocookie.com/embed/${FIRST_TRAILER_KEY}`}
-      title="YouTube video player"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen />
-    </div>
-
-  const image = POSTER as string
-  const singlePosterPath = (image !== null) ? `${MEDIA_URL}/${image}` : DEFAULT_IMAGE
-  const entryPoster = (FIRST_TRAILER_KEY !== false) ? TRAILER_EMBED : <img className='entry-poster' loading='lazy' alt='Poster image' src={singlePosterPath} />
-
   return (
     <>
       <div className='entry-details'>
-        {entryPoster}
-        <Headline detailsData={detailsData} />
+        <Suspense fallback={<Spinner />}>
+          <Headline allData={allData} />
+        </Suspense>
       </div>
       {entryTagline}
       {entryOverview}
       <div className='full-details'>
-        <LeftDetails detailsData={detailsData} />
-        <RightDetails detailsData={detailsData} />
+        <Suspense fallback={<Spinner />}>
+          <LeftDetails detailsData={detailsData} />
+        </Suspense>
+        <Suspense fallback={<Spinner />}>
+          <RightDetails detailsData={detailsData} />
+        </Suspense>
       </div>
     </>
   )
