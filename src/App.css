@@ -31,7 +31,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: #363636;
+    background-color: #181818;
     overflow: hidden;
     border-radius: 20px;
     top: 0;
@@ -42,9 +42,41 @@
     left: -45%;
     height: 100%;
     width: 45%;
-    background-image: linear-gradient(to left, rgba(40,40,40, .05), rgba(40,40,40, .3), rgba(40,40,40, .6), rgba(40,40,40, .3), rgba(40,40,40, .05));
-    background-image: -moz-linear-gradient(to left, rgba(40,40,40, .05), rgba(40,40,40, .3), rgba(40,40,40, .6), rgba(40,40,40, .3), rgba(40,40,40, .05));
-    background-image: -webkit-linear-gradient(to left, rgba(40,40,40, .05), rgba(40,40,40, .3), rgba(40,40,40, .6), rgba(40,40,40, .3), rgba(40,40,40, .05));
+    background-image: linear-gradient(
+        90deg,hsl(0deg 0% 9%) 0%,
+        hsl(0deg 0% 9%) 21%,
+        hsl(0deg 0% 19%) 42%,
+        hsl(0deg 0% 19%) 62%,
+        hsl(0deg 0% 9%) 81%,
+        hsl(0deg 0% 9%) 100%);
+    background-image:-webkit-linear-gradient(
+        90deg,hsl(0deg 0% 9%) 0%,
+        hsl(0deg 0% 9%) 21%,
+        hsl(0deg 0% 19%) 42%,
+        hsl(0deg 0% 19%) 62%,
+        hsl(0deg 0% 9%) 81%,
+        hsl(0deg 0% 9%) 100%);
+    background-image:-moz-linear-gradient(
+        90deg,hsl(0deg 0% 9%) 0%,
+        hsl(0deg 0% 9%) 21%,
+        hsl(0deg 0% 19%) 42%,
+        hsl(0deg 0% 19%) 62%,
+        hsl(0deg 0% 9%) 81%,
+        hsl(0deg 0% 9%) 100%);
+    background-image:-o-linear-gradient(
+        90deg,hsl(0deg 0% 9%) 0%,
+        hsl(0deg 0% 9%) 21%,
+        hsl(0deg 0% 19%) 42%,
+        hsl(0deg 0% 19%) 62%,
+        hsl(0deg 0% 9%) 81%,
+        hsl(0deg 0% 9%) 100%);
+    background-image:-ms-linear-gradient(
+        90deg,hsl(0deg 0% 9%) 0%,
+        hsl(0deg 0% 9%) 21%,
+        hsl(0deg 0% 19%) 42%,
+        hsl(0deg 0% 19%) 62%,
+        hsl(0deg 0% 9%) 81%,
+        hsl(0deg 0% 9%) 100%);
     animation: loading 1s infinite;
 }
 
