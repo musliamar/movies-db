@@ -1,14 +1,14 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { useStore, useDispatch } from '../../lib/context'
-import { fetchTopRated, fetchByString } from '../../lib/queries'
-import { IEntriesData, ISingleEntryData } from '../../lib/interfaces'
-import { SET_PROGRESS_VALUE, RESET_LOADED_IMAGES } from '../../lib/constants'
-import Search from '../Search/Search'
-import Spinner from '../Spinner'
+import { useStore, useDispatch } from '../lib/context'
+import { fetchTopRated, fetchByString } from '../lib/queries'
+import { IEntriesData, ISingleEntryData } from '../lib/interfaces'
+import { SET_PROGRESS_VALUE, RESET_LOADED_IMAGES } from '../lib/constants'
+import Search from '../components/Category/Search'
+import Spinner from '../components/Spinner'
 import './Category.css'
 
-const SingleCard = lazy(async () => await import('./SingleCard'))
+const SingleCard = lazy(async () => await import('../components/Category/SingleCard'))
 
 const links = [
   { slug: 'movie', name: 'Movies' },
@@ -60,6 +60,11 @@ function Category (): JSX.Element {
   }, [category, searchInput])
 
   useEffect(() => {
+    if ((loadedImagesOnCategory > 0) && (loadedImagesOnCategory < currentData.length)) {
+      const percentageOfLoadedImages = (100 * loadedImagesOnCategory) / currentData.length
+      dispatch({ type: SET_PROGRESS_VALUE, payload: percentageOfLoadedImages })
+    }
+
     if (loadedImagesOnCategory === currentData.length) {
       dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
       dispatch({ type: RESET_LOADED_IMAGES })

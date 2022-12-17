@@ -1,13 +1,13 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { fetchSingle, fetchTrailer } from '../../lib/queries'
-import { useDispatch } from '../../lib/context'
-import { SET_PROGRESS_VALUE } from '../../lib/constants'
-import { ISingleEntryData, IVideosData, ISingleAllData } from '../../lib/interfaces'
-import Spinner from '../Spinner'
+import { fetchSingle, fetchTrailer } from '../lib/queries'
+import { useDispatch } from '../lib/context'
+import { SET_PROGRESS_VALUE } from '../lib/constants'
+import { ISingleEntryData, IVideosData, ISingleAllData } from '../lib/interfaces'
+import Spinner from '../components/Spinner'
 import './Single.css'
 
-const SingleContainer = lazy(async () => await import('./SingleContainer'))
+const SingleContainer = lazy(async () => await import('../components/Single/SingleContainer'))
 
 function Single (): JSX.Element {
   const initialSingleData: ISingleAllData = { detailsData: {} }

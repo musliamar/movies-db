@@ -46,7 +46,7 @@ function Headline ({ allData }: Props): JSX.Element {
   const AVERAGE_VOTE = VOTE_AVERAGE?.toFixed(1)
   const GENRES_ARRAY = (typeof GENRES_TO_FIX === 'object') ? (GENRES_TO_FIX as any[]).map((genre) => genre.name) : null
   const GENRES = (GENRES_ARRAY != null) ? GENRES_ARRAY.join(', ') : null
-  const entryYear = (YEAR != null) && <span>({YEAR})</span>
+  const entryYear = ((YEAR != null) && (YEAR !== undefined) && (YEAR.length !== 0)) && <span>({YEAR})</span>
   const entryGenres = (GENRES_TO_FIX != null) && <span>{GENRES}</span>
   const entryNumberOfVotes = ((VOTES !== 0) && (VOTES !== undefined)) && <span>{VOTES} {VOTES > 1 ? 'votes' : 'vote'} </span>
   const entryAverageVote = (AVERAGE_VOTE !== '0.0') && <span className='average-vote-label'>{AVERAGE_VOTE}</span>

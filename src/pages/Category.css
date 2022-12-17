@@ -27,6 +27,26 @@ header nav a:hover, .checked {
     border: solid 2px #5a040a;
 }
 
+input {
+    background-color: #360408;
+    color: #fff;
+    border: solid 2px #9e0a14;
+    border-radius: 50px;
+    height: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+input:focus {
+    background-color: #5a050b;
+    color: #fff;
+    border: solid 2px #e00f1d;
+    border-radius: 50px;
+    height: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .error {
     padding-left: 20px;
 }
