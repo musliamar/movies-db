@@ -6,6 +6,7 @@ import IMDB from '../../media/imdb.png'
 import HREF from '../../media/href.png'
 import DEFAULT_IMAGE from '../../media/default.png'
 import Placeholder from '../Placeholder'
+import './SingleHeadline.css'
 
 interface Props {
   allData: ISingleAllData

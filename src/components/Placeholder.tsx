@@ -1,4 +1,5 @@
 import React from 'react'
+import './Placeholder.css'
 
 function Placeholder (): JSX.Element {
   return (

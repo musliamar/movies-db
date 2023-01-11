@@ -1,0 +1,16 @@
+.single-entry-container .tagline {
+    font-size: 20px;
+    font-style: italic;
+}
+
+.single-entry-container .entry-overview {
+    line-height: 20px;
+}
+
+.single-entry-container .full-details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3%;
+    row-gap: 20px;
+}

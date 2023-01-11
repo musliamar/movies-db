@@ -1,0 +1,29 @@
+.single-entry-container .right-details {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.single-entry-container .group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.single-entry-container .single-in-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 0px;
+    border-radius: 8px;
+    background-color: #484848;
+    max-width: 100px;
+}

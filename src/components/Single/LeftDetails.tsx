@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactCountryFlag from 'react-country-flag'
 import { ISingleEntryData } from '../../lib/interfaces'
+import './LeftDetails.css'
 
 interface Props {
   detailsData: ISingleEntryData

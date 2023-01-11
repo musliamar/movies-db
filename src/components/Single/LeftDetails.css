@@ -1,0 +1,17 @@
+.single-entry-container .bold {
+    font-weight:bold;
+}
+
+.single-entry-container .left-details {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.single-entry-container .single-left-detail {
+    border-radius: 8px;
+    background-color: #181818;
+    padding: 15px;
+}

@@ -3,6 +3,7 @@ import { ISingleAllData } from '../../lib/interfaces'
 import Spinner from '../Spinner'
 import { useDispatch } from '../../lib/context'
 import { SET_PROGRESS_VALUE } from '../../lib/constants'
+import './SingleContainer.css'
 
 const LeftDetails = lazy(async () => await import('./LeftDetails'))
 const RightDetails = lazy(async () => await import('./RightDetails'))

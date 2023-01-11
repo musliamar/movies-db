@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useStore, useDispatch } from '../lib/context'
 import { SET_PROGRESS_VALUE } from '../lib/constants'
+import './TopBar.css'
 
 const TopBar = (): JSX.Element => {
   const { loadingProgress } = useStore()

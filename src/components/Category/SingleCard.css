@@ -1,0 +1,68 @@
+.entry-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    padding: 2%;
+}
+
+.entry-card:hover {
+    background-color: #464646;
+    border-radius: 20px;
+}
+
+.poster-wrapper {
+    position: relative;
+} 
+
+.poster-wrapper .number-of-votes {
+    display: flex;
+    gap: 6%;
+    position: absolute;
+    align-items: center;
+    top: 6%;
+    left: 3%;
+    text-transform: uppercase;
+}
+
+.poster-wrapper .overview {
+    position: absolute;
+    bottom: 6%;
+    left: 3%;
+}
+
+.poster-wrapper .average-vote {
+    display: flex;
+    gap: 6%;
+    position: absolute;
+    align-items: center;
+    top: 6%;
+    right: 3%;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.poster-wrapper .average-vote-text {
+    text-align: right;
+}
+
+.opacity{
+    background: #000;
+    opacity: 0.3;
+  }
+
+.entries-container .entry-name {
+    margin-top: 3%;
+}
+
+.entry-poster {
+    width: 100%;
+    border-radius: 20px;
+    position: relative;
+}
+
+@media (max-width: 900px) {
+    .entry-card {
+        width: 100%;
+    }
+}

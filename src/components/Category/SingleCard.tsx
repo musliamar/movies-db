@@ -5,6 +5,7 @@ import { ISingleEntryData } from '../../lib/interfaces'
 import { MEDIA_URL, INCREASE_LOADED_IMAGES } from '../../lib/constants'
 import DEFAULT_IMAGE from '../../media/default.png'
 import Placeholder from '../Placeholder'
+import './SingleCard.css'
 
 interface Props {
   category: string
@@ -30,7 +31,7 @@ function SingleCard ({ category, data }: Props): JSX.Element {
   const singleId = id as number
   const posterAsString = POSTER_PATH as string
   const singlePosterPath = (posterAsString !== null) ? `${MEDIA_URL}/${posterAsString}` : DEFAULT_IMAGE
-  const singleOverview = `${SHORT_OVERVIEW as string}...`
+  const singleOverview = (SHORT_OVERVIEW != null && SHORT_OVERVIEW.length !== 0) && `${SHORT_OVERVIEW}...`
 
   const singleTitle = (ORIGINAL_TITLE != null)
     ? <span className='entry-name'>{ORIGINAL_TITLE}</span>

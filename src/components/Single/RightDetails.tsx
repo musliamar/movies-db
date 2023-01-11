@@ -2,6 +2,7 @@ import React from 'react'
 import { BACKDROP_URL, AUTHOR_IMAGE_URL, ORIGINAL_IMAGE_URL } from '../../lib/constants'
 import DEFAULT_PLACEHOLDER from '../../media/default-placeholder.png'
 import { ISingleEntryData } from '../../lib/interfaces'
+import './RightDetails.css'
 
 interface Props {
   detailsData: ISingleEntryData

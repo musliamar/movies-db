@@ -1,0 +1,93 @@
+.single-entry-container .votes {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+}
+
+.single-entry-container .title-and-votes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 20px;
+    row-gap: 10px;
+    margin-top: 10px;
+}
+
+.single-entry-container .links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 20px;
+    row-gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.single-entry-container .entry-name {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.single-entry-container .imdb-icon, .single-entry-container .href-icon {
+    width: 50px;
+}
+
+.single-entry-container .entry-poster-wrapper {
+    position: relative;
+}
+
+.single-entry-container .entry-poster {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.single-entry-container .headline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+iframe {
+    border-width: 0px;
+    left: 0;
+    top: 0;
+    height: 300px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+@media (min-width: 1400px) {
+    iframe {
+        height: 500px;
+    }
+}
+
+@media (min-width: 1000px) and (max-width: 1399px) {
+    iframe {
+        height: 400px;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 999px) {
+    iframe {
+        height: 300px;
+    }
+}
+
+@media (max-width: 1080px) {
+    .single-entry-container .headline {
+        justify-content: flex-start;
+    }
+    .single-entry-container .title-and-votes {
+        width: 100%;
+    }
+}
