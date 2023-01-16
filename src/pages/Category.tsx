@@ -1,19 +1,14 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useStore, useDispatch } from '../lib/context'
 import { fetchTopRated, fetchByString } from '../lib/queries'
 import { IEntriesData, ISingleEntryData } from '../lib/interfaces'
-import { SET_PROGRESS_VALUE, RESET_LOADED_IMAGES } from '../lib/constants'
+import { SET_PROGRESS_VALUE, RESET_LOADED_IMAGES, SET_CHOOSEN_CATEGORY } from '../lib/constants'
 import Search from '../components/Category/Search'
 import Spinner from '../components/Spinner'
 import './Category.css'
 
 const SingleCard = lazy(async () => await import('../components/Category/SingleCard'))
-
-const links = [
-  { slug: 'movie', name: 'Movies' },
-  { slug: 'tv', name: 'TV SHOWS' }
-]
 
 function Category (): JSX.Element {
   const initialCurrentData: ISingleEntryData[] = []
@@ -35,6 +30,7 @@ function Category (): JSX.Element {
           const { results } = data
           setCurrentData(results.slice(0, 10))
           setLoading({ message: '', status: 'success' })
+          dispatch({ type: SET_CHOOSEN_CATEGORY, payload: categoryToFetch })
         }).catch(() => {
           setLoading({ message: 'Unable to find category.', status: 'error' })
           dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
@@ -52,6 +48,7 @@ function Category (): JSX.Element {
             setCurrentData(results)
             setLoading({ message: '', status: 'success' })
           }
+          dispatch({ type: SET_CHOOSEN_CATEGORY, payload: categoryToFetch })
         }).catch(() => {
           setLoading({ message: 'Unable to retrieve data.', status: 'error' })
           dispatch({ type: SET_PROGRESS_VALUE, payload: 100 })
@@ -73,12 +70,6 @@ function Category (): JSX.Element {
 
   return (
     <>
-      <header>
-        <nav>
-        {links.map((link) =>
-          <Link key={link.slug} className={categoryToFetch === link.slug ? 'checked' : undefined} to={`/${link.slug}`}>{link.name.toUpperCase()}</Link>)}
-        </nav>
-      </header>
       <Search />
       <main className='entries-container'>
         <>

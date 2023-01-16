@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import './App.css'
+import Header from './components/Header'
 import Footer from './components/Footer'
 import { Routes, Route } from 'react-router-dom'
 import Spinner from './components/Spinner'
@@ -11,6 +12,7 @@ const Single = lazy(async () => await import('./pages/Single'))
 function App (): JSX.Element {
   return (
     <div className="App">
+      <Header />
       <LoadingBar />
       <Suspense fallback={<Spinner />}>
         <Routes>

@@ -6,22 +6,33 @@ import React, {
   Dispatch
 } from 'react'
 
-import { SET_SEARCH, SET_PROGRESS_VALUE, INCREASE_LOADED_IMAGES, RESET_LOADED_IMAGES } from './constants'
+import {
+  SET_SEARCH,
+  SET_PROGRESS_VALUE,
+  SET_CHOOSEN_CATEGORY,
+  INCREASE_LOADED_IMAGES,
+  RESET_LOADED_IMAGES
+} from './constants'
 
 interface State {
   searchInput: string
   loadingProgress: number
   loadedImagesOnCategory: number
+  choosenCategory: string
 }
 
 const initialValues = {
   searchInput: '',
   loadingProgress: 0,
-  loadedImagesOnCategory: 0
+  loadedImagesOnCategory: 0,
+  choosenCategory: ''
 }
 
 type Action = | {
   type: 'SET_SEARCH'
+  payload: string
+} | {
+  type: 'SET_CHOOSEN_CATEGORY'
   payload: string
 } | {
   type: 'SET_PROGRESS_VALUE'
@@ -44,6 +55,11 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         searchInput: action.payload
+      }
+    case SET_CHOOSEN_CATEGORY:
+      return {
+        ...state,
+        choosenCategory: action.payload
       }
     case SET_PROGRESS_VALUE:
       return {

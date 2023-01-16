@@ -1,0 +1,28 @@
+header nav {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+header nav a {
+    background-color: #5a040a;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 30px;
+    border: 2px solid #ab0611;;
+    border-radius: 50px;
+    transition : 1000ms;
+    transform: translateY(0);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+header nav a:hover, .checked {
+    transition : 1000ms;
+    padding: 10px 31px;
+    transform : translateY(-0px);
+    background-color: #ab0611;
+    color: #fff;
+    border: solid 2px #5a040a;
+}
